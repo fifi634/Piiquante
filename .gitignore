@@ -1,0 +1,8 @@
+# Directory Node server
+node_modules
+
+# Directory of pictures
+images
+
+# Protected variables
+.env
