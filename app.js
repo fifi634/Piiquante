@@ -7,7 +7,7 @@ const app = express();
 
 // Routes import
 // const sauceRoutes = require('./routes/sauce');
-// const userRoutes = require('./routes/user');
+const userRoutes = require('./routes/user');
 
 //JSON body reception
 app.use(express.json());
@@ -18,14 +18,14 @@ const path = require('path');
 // CORS header
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Content, Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Accept, Content, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     next();
 })
 
 // End-point configuration
 // app.use('/api/sauces', sauceRoutes);
-// app.use('/api/auth', userRoutes);
+app.use('/api/auth', userRoutes);
 // app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // Application export
