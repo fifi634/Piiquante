@@ -1,6 +1,7 @@
-// Bcrypt and Json Web Token plugin import
+// Bcrypt / Json Web Token / DotEnv plugin import
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 // Model import
 const User = require('../models/User');
@@ -37,7 +38,7 @@ exports.login = (req, res, next) => {
                         else {
                             res.status(200).json({
                                 userId: user._id,
-                                token: jwt.sign({userId: user._id}, '/(FLf|HgIXjHH;|W>DMu', {expireIn: '24h'})
+                                token: jwt.sign({userId: user._id}, process.env.RANDOM_TOKEN_SECRET, {expiresIn: '24h'})
                             });
                         }
                     })
