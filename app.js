@@ -1,12 +1,10 @@
 // Import DotEnv and Express
 require('dotenv').config();
-
-// Express import
 const express = require('express');
 const app = express();
 
 // Routes import
-// const sauceRoutes = require('./routes/sauce');
+const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 
 //JSON body reception
@@ -24,9 +22,9 @@ app.use((req, res, next) => {
 })
 
 // End-point configuration
-// app.use('/api/sauces', sauceRoutes);
+app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
-// app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // Application export
 module.exports = app;
