@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 // End-point configuration
 // app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
-// app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // Application export
 module.exports = app;
