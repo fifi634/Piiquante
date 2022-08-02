@@ -1,5 +1,6 @@
 // Mongoose import
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 
 // Schema creation
 const sauceSchema = mongoose.Schema({
@@ -10,11 +11,14 @@ const sauceSchema = mongoose.Schema({
     mainPepper: {type: String, required: true},
     imageUrl: {type: String, required: true},
     heat: {type: Number, required: true},
-    likes: {type: Number, required: true},
-    dislikes: {type: Number, required: true},
-    usersLiked: {type: Array, required: true},
-    usersDisliked: {type: Array, required: true}
+    likes: {type: Number, required: true, default: 0},
+    dislikes: {type: Number, required: true, default: 0},
+    usersLiked: {type: Array, required: true, default: []},
+    usersDisliked: {type: Array, required: true, default: []}
 });
+
+// Apply validator to model
+sauceSchema.plugin(uniqueValidator);
 
 // Schema export
 module.exports = mongoose.model('Sauce', sauceSchema);
