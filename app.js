@@ -7,11 +7,11 @@ const app = express();
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 
-//JSON body reception
-app.use(express.json());
-
 // File path import
 const path = require('path');
+
+//JSON body reception
+app.use(express.json());
 
 // CORS header
 app.use((req, res, next) => {

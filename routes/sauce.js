@@ -6,12 +6,13 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 
 // Multer import (file import)
-const multer = require('../middleware/multer-config');
+const multer = require('../middleware/multer');
 
 // Controller import
 const sauceCtrl = require('../controllers/sauce');
 
 // Path
+router.post('/:id/like', auth, sauceCtrl.likeSauce);
 router.post('/', auth, multer, sauceCtrl.createSauce);
 router.put('/:id', auth, multer, sauceCtrl.modifySauce);
 router.delete('/:id', auth, sauceCtrl.deleteSauce);
