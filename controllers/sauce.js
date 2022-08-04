@@ -1,34 +1,61 @@
 // JSON models and File System plugin import
 const Sauce = require('../models/Sauce');
 const fs = require('fs');
+const { updateOne } = require('../models/Sauce');
 
 // POST like note
 exports.likeSauce = (req, res, next) => {
     Sauce.findOne({_id: req.params.id})
         .then(sauce => {
             let likedIdArray = sauce.usersLiked;
-            let inArrayLike = likedIdArray.includes(req.params.id);
-            console.log(inArrayLike);
-            // If user like sauce, increment "likes" and add id user's in "usersLiked" array
-            if (req.body.like == 1 && !inArrayLike) {
-                Sauce.updateOne({_id: req.params.id}, {$push:{usersLiked: req.params.id}, $inc:{likes: 1}} )
-                    .then(() => res.status(200).json({message: 'like updated'}))
-                    .catch(error => res.status(400).json({error}))
-                ;                                              
-            } else {
-                res.status(403).json({message: 'like already stored'});  
-            }
-        })            
-        .catch(error => res.status(500).json({error}))
-    ;
-           
-    // If user cancel his like, delete id user's of "usersLiked" array and subtrack this like
-    // if(req.body.like === 0) {
-    //     Sauce.updateOne({_id: req.params.id}, {
-    //         for ()
-    //         $pop:{userLiked}})
-    // }
+            let dislikedArray = sauce.usersDisliked;
+            // Search if user is known in array's like or dislike, return a boolean
+            let inArrayLike = likedIdArray.includes(req.body.userId);
+            let inArrayDislike = dislikedArray.includes(req.body.userId);
 
+            // If user like sauce, increment "likes" and add id user's in "usersLiked" array
+            if (req.body.like === 1 && !inArrayLike) {
+                Sauce.updateOne({_id: req.params.id}, {$push: {usersLiked: req.body.userId}, $inc: {likes: 1}} )
+                    .then(() => res.status(200).json({message: 'Like updated'}))
+                    .catch(error => res.status(400).json({error}))
+                ;
+                return;
+            }
+
+            // If user cancel his like, delete id user's in "usersLiked" array and subtrack this like
+            if (req.body.like === 0) {
+                if (inArrayLike) {
+                    Sauce.updateOne({_id: req.params.id}, {$pull: {usersLiked: req.body.userId}, $inc: {likes: -1}})
+                        .then(() => res.status(200).json({message: 'Like canceled'}))
+                        .catch(error => res.status(400).json({error}))
+                    ;
+                    return;
+                }
+                if (inArrayDislike) {
+                    Sauce.updateOne({_id: req.params.id}, {$pull: {usersDisliked: req.body.userId}, $inc: {dislikes: -1}})
+                        .then(() => res.status(200).json({message: 'Duslike canceled'}))
+                        .catch(error => res.status(400).json({error}))
+                    ;
+                    return;
+                }
+            }
+
+            // If user dislike sauce, increment "dislike" and add iduser's in usersDislike array
+            if (req.body.like === -1 && !inArrayDislike) {
+                Sauce.updateOne({_id: req.params.id}, {$push: {usersDisliked: req.body.userId}, $inc: {dislikes: 1}})
+                    .then(() => res.status(200).json({message: 'Dislike updated'}))
+                    .catch(error => res.status(400).json({error}))
+                ;
+            }
+
+            // Else can't update like
+            else {
+                res.status(202).json({message: 'Like or dislike already stored or impossible to cancel inexisting like'});
+                return;
+            };
+        })         
+        .catch(error => res.status(500).json({error}))
+    ;   
 };
 
 // POST created data
