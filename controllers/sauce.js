@@ -1,7 +1,6 @@
 // JSON models and File System plugin import
 const Sauce = require('../models/Sauce');
 const fs = require('fs');
-const { updateOne } = require('../models/Sauce');
 
 // POST like note
 exports.likeSauce = (req, res, next) => {
@@ -33,7 +32,7 @@ exports.likeSauce = (req, res, next) => {
                 }
                 if (inArrayDislike) {
                     Sauce.updateOne({_id: req.params.id}, {$pull: {usersDisliked: req.body.userId}, $inc: {dislikes: -1}})
-                        .then(() => res.status(200).json({message: 'Duslike canceled'}))
+                        .then(() => res.status(200).json({message: 'Dislike canceled'}))
                         .catch(error => res.status(400).json({error}))
                     ;
                     return;
@@ -133,6 +132,6 @@ exports.getOneSauce = (req, res, next) => {
 exports.getAllSauce = (req, res, next) => {
     Sauce.find()
         .then(sauces => res.status(200).json(sauces))
-        .catch(error => res.status(400).json({error}))
+        .catch(error => res.status(404).json({error}))
     ;
 };

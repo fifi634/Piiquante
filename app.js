@@ -1,17 +1,27 @@
-// Import DotEnv and Express
+// Import DotEnv, Express and Helmet
 require('dotenv').config();
 const express = require('express');
+const helmet = require('helmet');
+
 const app = express();
+
+
+// Configuration of Helmet for accept upload image
+app.use(helmet.frameguard({action: "SAMEORIGIN"}));
+
 
 // Routes import
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 
+
 // File path import
 const path = require('path');
 
-//JSON body reception
+
+//JSON body parser reception
 app.use(express.json());
+
 
 // CORS header
 app.use((req, res, next) => {
@@ -21,13 +31,16 @@ app.use((req, res, next) => {
     next();
 })
 
-// End-point configuration
+
+// Path configuration
 app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
+
 // Application export
 module.exports = app;
+
 
 /************** */
 /*  MONGO DB    */
@@ -35,6 +48,7 @@ module.exports = app;
 
 // Mongoose import
 const mongoose = require('mongoose');
+
 
 // MongoDB connection
 mongoose.connect(`mongodb+srv://${process.env.MONGO_ID}:${process.env.MONGO_PASSWORD}@cluster0.3phpp.mongodb.net/?retryWrites=true&w=majority`,

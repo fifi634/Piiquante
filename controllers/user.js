@@ -8,6 +8,7 @@ const User = require('../models/User');
 
 // Acount creation
 exports.signup = (req, res, next) => {
+
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({
