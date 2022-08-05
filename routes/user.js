@@ -1,6 +1,7 @@
 // Import plugins
 const express = require('express');
 const password = require('../middleware/password');
+const limiter = require('../middleware/limiter');
 
 const router = express.Router();
 
@@ -9,7 +10,7 @@ const userCtrl = require('../controllers/user');
 
 // Path
 router.post('/signup', password, userCtrl.signup);
-router.post('/login', userCtrl.login);
+router.post('/login', limiter, userCtrl.login);
 
 // Router export
 module.exports = router;
