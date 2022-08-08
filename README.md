@@ -3,9 +3,9 @@ Pratical work of OpenClassRooms Web Developper formation. API of fictitious comp
 
 
 # Running frontend project
-Angular 13.2.4 used. Node.js is reuqired, for install it : https://nodejs.org/en/download/
+Angular 13.2.4 used. Node.js is required, for install it : https://nodejs.org/en/download/
 
-In frontend directory, in cli :
+In cli :
 
 1 - Clone frontend project : git clone https://github.com/OpenClassrooms-Student-Center/Web-Developer-P6 frontend
 
@@ -20,7 +20,7 @@ Frontend server navigate into http://localhost:4200/
 If you have a problem with ng execution, authorize script from Power Shell console with administratory access : set-executionpolicy RemoteSigned (or Unrestricted)
 
 
-# Runnuig backend server
+# Running backend server
 Node.js LTS 16.16.0 used, for install it : https://nodejs.org/en/download/
 
 In cli, tape :
