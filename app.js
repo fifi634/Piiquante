@@ -1,7 +1,8 @@
-// Import DotEnv, Express and Helmet
+// Import plugin
 require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
+const path = require('path');
 
 const app = express();
 
@@ -13,10 +14,6 @@ app.use(helmet.frameguard({action: "SAMEORIGIN"}));
 // Routes import
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
-
-
-// File path import
-const path = require('path');
 
 
 //JSON body parser reception
