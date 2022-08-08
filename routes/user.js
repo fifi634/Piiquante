@@ -8,7 +8,7 @@ const router = express.Router();
 // Controller import
 const userCtrl = require('../controllers/user');
 
-// Path
+// Endpoint
 router.post('/signup', password, userCtrl.signup);
 router.post('/login', limiter, userCtrl.login);
 
