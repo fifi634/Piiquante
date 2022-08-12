@@ -9,11 +9,11 @@ In cli :
 
 1 - Clone frontend project : git clone https://github.com/OpenClassrooms-Student-Center/Web-Developer-P6 frontend
 
-2 - Install Angular and other dependances : npm install
+2 - Go to frontend directory
 
-3 - Go to frontend directory
+3 - Install Angular and other dependances : npm install
 
-2 - Launch frontend server : ng serve
+4 - Launch frontend server : ng serve
 
 Frontend server navigate into http://localhost:4200/
 

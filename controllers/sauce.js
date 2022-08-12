@@ -100,7 +100,7 @@ exports.modifySauce = (req, res, next) => {
 
 // DELETE one sauce
 exports.deleteSauce = (req, res, next) => {
-    Sauce.findOne()
+    Sauce.findOne({_id: req.params.id})
         .then(sauce => {
             // Check user
             if(sauce.userId != req.auth.userId) {

@@ -11,7 +11,7 @@ const multer = require('../middleware/multer');
 // Controller import
 const sauceCtrl = require('../controllers/sauce');
 
-// Path
+// Endpoint
 router.post('/:id/like', auth, sauceCtrl.likeSauce);
 router.post('/', auth, multer, sauceCtrl.createSauce);
 router.put('/:id', auth, multer, sauceCtrl.modifySauce);
@@ -21,5 +21,3 @@ router.get('/', auth, sauceCtrl.getAllSauce);
 
 // Sauce router export
 module.exports = router;
-
-

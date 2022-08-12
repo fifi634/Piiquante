@@ -20,7 +20,7 @@ module.exports = (req, res, next) => {
     else { 
         return res
             .status(400)
-            .json({error: `Your password must have 8 characters and 2 digits, ${(passwordSchema.validate('req.body.password', {list: true}))}`})
+            .json({error: `Your password must have 8 characters with 2 digits, ${(passwordSchema.validate('req.body.password', {list: true}))}`})
         ;
     };
 };
