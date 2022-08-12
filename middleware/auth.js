@@ -1,3 +1,8 @@
+/* ****************************** */
+/* Check if user is authenticated */
+/******************************** */
+
+
 // JSON Web Token and DotEnv plugin import
 const jwt = require('jsonwebtoken');
 require('dotenv').config();

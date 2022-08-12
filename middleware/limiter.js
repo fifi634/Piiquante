@@ -1,6 +1,10 @@
+/************************ */
+/* Limit wrong connection */
+/************************ */
+
+
 // Import plugin
 const rateLimit = require('express-rate-limit');
-
 
 // Configuration of limiter
 const limiter = rateLimit({

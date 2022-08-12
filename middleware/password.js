@@ -1,3 +1,7 @@
+/********************* */
+/* Set format password */
+/********************* */
+
 // Import plugin
 const passwordValidator = require('password-validator');
 
