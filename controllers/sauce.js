@@ -2,6 +2,7 @@
 const Sauce = require('../models/Sauce');
 const fs = require('fs');
 
+
 // POST like note
 exports.likeSauce = (req, res, next) => {
     Sauce.findOne({_id: req.params.id})
@@ -23,6 +24,7 @@ exports.likeSauce = (req, res, next) => {
 
             // If user cancel his like, delete id user's in "usersLiked" array and subtrack this like
             if (req.body.like === 0) {
+                // If it's a like cancel
                 if (inArrayLike) {
                     Sauce.updateOne({_id: req.params.id}, {$pull: {usersLiked: req.body.userId}, $inc: {likes: -1}})
                         .then(() => res.status(200).json({message: 'Like canceled'}))
@@ -30,6 +32,7 @@ exports.likeSauce = (req, res, next) => {
                     ;
                     return;
                 }
+                // If it's a dislike cancel
                 if (inArrayDislike) {
                     Sauce.updateOne({_id: req.params.id}, {$pull: {usersDisliked: req.body.userId}, $inc: {dislikes: -1}})
                         .then(() => res.status(200).json({message: 'Dislike canceled'}))
@@ -57,6 +60,7 @@ exports.likeSauce = (req, res, next) => {
     ;   
 };
 
+
 // POST created data
 exports.createSauce = (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce);
@@ -73,20 +77,38 @@ exports.createSauce = (req, res, next) => {
     ;
 };
 
+
 // PUT Modify one sauce
 exports.modifySauce = (req, res, next) => {
-    // Check if it have a file or not for recover object
+    
+    // Check if it have image modification for delete old it
+    if(req.file) {
+        Sauce.findOne({_id: req.params.id})
+            .then(sauce => {
+                // Check user
+                if(sauce.userId != req.auth.userId) {
+                    res.status(403).json({message: 'Unauthorized delete request'})
+                } else {
+                    const filename = sauce.imageUrl.split('/images/')[1];
+                    fs.unlink(`images/${filename}`, (err => err ? console.log(err) : console.log('Old image deleted')));
+                }})
+            .catch(error => res.status(400).json({error}))
+        ;
+    }
+    
+    // Check if it have a image or not for object modification
     const sauceObject = req.file ? {
         ...JSON.parse(req.body.sauce),
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : {...req.body};
     delete sauceObject._userId;
 
+    // Save modification
     Sauce.findOne({_id: req.params.id})
         .then(sauce => {
             // Check user
             if(sauce.userId != req.auth.userId) {
-                res.status(403).json({message: 'Unauthorized request'})
+                res.status(403).json({message: 'Unauthorized modification request'})
             } else {
                 Sauce.updateOne({_id: req.params.id}, {...sauceObject, _id: req.params.id})
                     .then(() => res.status(200).json({message: 'Modified !'}))
@@ -97,6 +119,7 @@ exports.modifySauce = (req, res, next) => {
         .catch(error => res.status(400).json({error}))
     ;
 };
+
 
 // DELETE one sauce
 exports.deleteSauce = (req, res, next) => {
@@ -120,6 +143,7 @@ exports.deleteSauce = (req, res, next) => {
     ;
 };
 
+
 // GET Recover one sauce
 exports.getOneSauce = (req, res, next) => {
     Sauce.findOne({_id: req.params.id})
@@ -127,6 +151,7 @@ exports.getOneSauce = (req, res, next) => {
         .catch(error => res.status(404).json({error}))
     ;
 };
+
 
 // GET Recover all sauces
 exports.getAllSauce = (req, res, next) => {
