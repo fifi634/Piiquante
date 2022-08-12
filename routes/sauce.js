@@ -21,5 +21,3 @@ router.get('/', auth, sauceCtrl.getAllSauce);
 
 // Sauce router export
 module.exports = router;
-
-
