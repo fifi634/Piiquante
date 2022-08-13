@@ -1,9 +1,10 @@
-// JSON models and File System plugin import
+/* JSON models and File System plugin import */
 const Sauce = require('../models/Sauce');
 const fs = require('fs');
 
 
-// POST like note
+/* POST like note */
+/**************** */
 exports.likeSauce = (req, res, next) => {
     Sauce.findOne({_id: req.params.id})
         .then(sauce => {
@@ -42,7 +43,7 @@ exports.likeSauce = (req, res, next) => {
                 }
             }
 
-            // If user dislike sauce, increment "dislike" and add iduser's in usersDislike array
+            // If user dislike sauce, increment "dislike" and add id user's in usersDislike array
             if (req.body.like === -1 && !inArrayDislike) {
                 Sauce.updateOne({_id: req.params.id}, {$push: {usersDisliked: req.body.userId}, $inc: {dislikes: 1}})
                     .then(() => res.status(200).json({message: 'Dislike updated'}))
@@ -56,12 +57,13 @@ exports.likeSauce = (req, res, next) => {
                 return;
             };
         })         
-        .catch(error => res.status(500).json({error}))
+        .catch(error => res.status(404).json({error}))
     ;   
 };
 
 
-// POST created data
+/* POST created data */
+/******************* */
 exports.createSauce = (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
@@ -78,7 +80,8 @@ exports.createSauce = (req, res, next) => {
 };
 
 
-// PUT Modify one sauce
+/* PUT Modify one sauce */
+/********************** */
 exports.modifySauce = (req, res, next) => {
     
     // Check if it have image modification for delete old it
@@ -92,7 +95,7 @@ exports.modifySauce = (req, res, next) => {
                     const filename = sauce.imageUrl.split('/images/')[1];
                     fs.unlink(`images/${filename}`, (err => err ? console.log(err) : console.log('Old image deleted')));
                 }})
-            .catch(error => res.status(400).json({error}))
+            .catch(error => res.status(404).json({error}))
         ;
     }
     
@@ -116,12 +119,13 @@ exports.modifySauce = (req, res, next) => {
                 ;
             }
         })
-        .catch(error => res.status(400).json({error}))
+        .catch(error => res.status(404).json({error}))
     ;
 };
 
 
-// DELETE one sauce
+/* DELETE one sauce */
+/****************** */
 exports.deleteSauce = (req, res, next) => {
     Sauce.findOne({_id: req.params.id})
         .then(sauce => {
@@ -139,12 +143,13 @@ exports.deleteSauce = (req, res, next) => {
                 })
             }
         })
-        .catch(error => res.status(500).json({error}))
+        .catch(error => res.status(404).json({error}))
     ;
 };
 
-
-// GET Recover one sauce
+ 
+/* GET Recover one sauce */
+/*********************** */
 exports.getOneSauce = (req, res, next) => {
     Sauce.findOne({_id: req.params.id})
         .then(sauce => res.status(200).json(sauce))
@@ -153,7 +158,8 @@ exports.getOneSauce = (req, res, next) => {
 };
 
 
-// GET Recover all sauces
+/* GET Recover all sauces */
+/************************ */
 exports.getAllSauce = (req, res, next) => {
     Sauce.find()
         .then(sauces => res.status(200).json(sauces))

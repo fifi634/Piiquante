@@ -5,7 +5,7 @@ const router = express.Router();
 // Authentification by token import
 const auth = require('../middleware/auth');
 
-// Multer import (file import)
+// Multer import
 const multer = require('../middleware/multer');
 
 // Controller import

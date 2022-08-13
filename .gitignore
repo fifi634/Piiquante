@@ -2,7 +2,7 @@
 node_modules
 
 # Directory of pictures
-images
+images/*
 
 # Protected variables
 .env
