@@ -1,3 +1,8 @@
+/************ */
+/* Add images */
+/************ */
+
+
 // Multer plugin import
 const multer = require('multer');
 

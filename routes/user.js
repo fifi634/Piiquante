@@ -1,5 +1,7 @@
-// Import plugins
+// Import plugin
 const express = require('express');
+
+// Middleware import
 const password = require('../middleware/password');
 const limiter = require('../middleware/limiter');
 

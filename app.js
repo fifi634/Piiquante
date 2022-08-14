@@ -1,4 +1,4 @@
-// Import plugin
+// Import plugins
 require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');

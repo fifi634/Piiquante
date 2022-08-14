@@ -1,3 +1,7 @@
+/********************* */
+/* Set format password */
+/********************* */
+
 // Import plugin
 const passwordValidator = require('password-validator');
 
@@ -16,11 +20,11 @@ passwordSchema
 
 // Check quality of password and export it
 module.exports = (req, res, next) => {
-    if(passwordSchema.validate(req.body.password)) { next(); }
+    if (passwordSchema.validate(req.body.password)) { next(); }
     else { 
         return res
             .status(400)
-            .json({error: `Your password must have 8 characters with 2 digits, ${(passwordSchema.validate('req.body.password', {list: true}))}`})
+            .json({error: `Your password must have 8 characters with 2 digits. Space is not authorize. This is problematic in your password : ${(passwordSchema.validate(req.body.password, {list: true}))}`})
         ;
     };
 };

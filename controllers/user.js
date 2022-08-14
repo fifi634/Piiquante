@@ -1,4 +1,4 @@
-// Bcrypt / Json Web Token / DotEnv plugin import
+// Bcrypt / Json Web Token / DotEnv plugins import
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -8,7 +8,6 @@ const User = require('../models/User');
 
 // Acount creation
 exports.signup = (req, res, next) => {
-
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({
