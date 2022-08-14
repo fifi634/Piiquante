@@ -93,7 +93,7 @@ exports.modifySauce = (req, res, next) => {
                     res.status(403).json({message: 'Unauthorized delete request'})
                 } else {
                     const filename = sauce.imageUrl.split('/images/')[1];
-                    fs.unlink(`images/${filename}`, (err => err ? console.log(err) : console.log('Old image deleted')));
+                    fs.unlink(`images/${filename}`, (err => err ? console.log(err) : console.log('Modification sauce : old image deleted')));
                 }})
             .catch(error => res.status(404).json({error}))
         ;
