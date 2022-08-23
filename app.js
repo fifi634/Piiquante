@@ -11,6 +11,7 @@ const app = express();
 app.use(helmet.frameguard({action: "SAMEORIGIN"}));
 
 
+
 // Routes import
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
@@ -48,7 +49,7 @@ const mongoose = require('mongoose');
 
 
 // MongoDB connection
-mongoose.connect(`mongodb+srv://${process.env.MONGO_ID}:${process.env.MONGO_PASSWORD}@cluster0.3phpp.mongodb.net/?retryWrites=true&w=majority`,
+mongoose.connect(`mongodb+srv://${process.env.MONGO_ID}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}/${process.env.MONGO_RULES_CONNECT}`,
     {useNewUrlParser: true, useUnifiedTopology: true})
         .then(() => console.log('Connection to MongoDB successful !'))
         .catch(error => console.log('Connection to MongoDB failed > ' + error))
